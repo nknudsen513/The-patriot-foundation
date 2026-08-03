@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Line" xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <g>
+    <polygon points="256 236.619 13.205 323.066 13.205 504.891 256 418.444 256 236.619" fill="none" stroke="#302f39" stroke-linejoin="round" stroke-width="8"/>
+    <polygon points="256 236.619 498.795 323.066 498.795 504.891 256 418.444 256 236.619" fill="none" stroke="#302f39" stroke-linejoin="round" stroke-width="8"/>
+  </g>
+  <g>
+    <polygon points="256 7.109 13.205 93.556 13.205 275.381 256 188.934 256 7.109" fill="none" stroke="#302f39" stroke-linejoin="round" stroke-width="8"/>
+    <polygon points="256 7.109 498.795 93.556 498.795 275.381 256 188.934 256 7.109" fill="none" stroke="#302f39" stroke-linejoin="round" stroke-width="8"/>
+  </g>
+</svg>
