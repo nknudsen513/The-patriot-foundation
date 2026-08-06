@@ -330,7 +330,7 @@ blockquote {
 .logo {
   width: auto;
   max-width: 100%;
-  height: 2.9em;
+  height: 2.5em;
   margin-top: 0;
   display: block;
 }
@@ -2352,7 +2352,7 @@ blockquote {
   }
 
   .logo {
-    height: 2.4em;
+    height: 2.2em;
   }
 
   .nav-link-2 {
@@ -2673,7 +2673,7 @@ blockquote {
   }
 
   .logo {
-    height: 2.1em;
+    height: 1.9em;
   }
 
   .nav-link-2.menu-text {
@@ -3254,4 +3254,74 @@ blockquote {
   font-weight: 300;
   font-style: normal;
   font-display: swap;
+}
+/* ==========================================================================
+   MOBILE OPTIMISATION — appended after the Webflow breakpoints so these win
+   at equal specificity. Nothing above this line was edited.
+   ========================================================================== */
+
+/* --- Fixes for bugs that only surface at phone widths ---------------------
+   1. .hero had `min-height: 800lvh` at <=479 in the original export — almost
+      certainly a typo for 800px, since every sibling rule at that breakpoint is
+      px-based (.section-parallax 800px, .section-parallax-image 800px). At
+      800lvh the absolutely-positioned .hero_content became ~800 screens tall,
+      so the centred quote landed far below the visible, overflow-hidden window.
+   2. .home-quote used `width: 34ch` (~646px) rather than max-width, so it blew
+      past the viewport on phones — the horizontal overflow on the home page.
+   3. .hall-member-item sets font-size: 1.5em, which the honoree names inherit.
+   ------------------------------------------------------------------------ */
+@media screen and (max-width: 479px) {
+  .hero { min-height: 800px; }
+}
+@media screen and (max-width: 767px) {
+  .h2.always-centered.home-quote { width: auto; max-width: 100%; }
+  .hall-member-item { font-size: 1.15em; padding-top: 1.1em; padding-bottom: 1.1em; }
+}
+@media screen and (max-width: 479px) {
+  .hall-member-item { font-size: 1.05em; padding-top: .9em; padding-bottom: .9em; }
+}
+
+/* Classes replacing former inline styles, so they can respond to breakpoints */
+.hero_content.middle.home-quote-lower { padding-top: 34lvh; padding-bottom: 4lvh; }
+.col.photo-inset { padding: 2.5em 3em; }
+.column-photo._2.small.hop-nominee { min-height: 560px; }
+
+@media screen and (max-width: 991px) {
+  .section { padding-left: 2.25em; padding-right: 2.25em; }
+  .section.section2 { padding-left: 2.25em; padding-right: 2.25em; }
+  .section.no-padding.hall-of-patriot-section { padding-left: 2.25em; padding-right: 2.25em; }
+  .col.photo-inset { padding: 2em 2.25em; }
+  .hero_content.middle.home-quote-lower { padding-top: 30lvh; }
+}
+
+@media screen and (max-width: 767px) {
+  .section { padding-left: 1.75em; padding-right: 1.75em; }
+  .section.section2 { padding-left: 1.75em; padding-right: 1.75em; }
+  .section.no-padding.hall-of-patriot-section { padding-left: 1.75em; padding-right: 1.75em; }
+  .col.photo-inset { padding: 1.5em 0; }
+  .column-photo._2.small.hop-nominee { min-height: 440px; }
+  .hero_content.middle.home-quote-lower { padding-top: 26lvh; padding-bottom: 3lvh; }
+  /* the search form carries a hard 400px width — cap it so it can't overflow */
+  .search-pop-up, .search-pop-up-wrapper { width: 100%; max-width: 100%; }
+}
+
+@media screen and (max-width: 479px) {
+  .section { padding-left: 1.15em; padding-right: 1.15em; }
+  .section.section2 { padding-left: 1.15em; padding-right: 1.15em; }
+  .section.no-padding.hall-of-patriot-section { padding-left: 1.15em; padding-right: 1.15em; }
+  /* Edge-bleed: the stock rule used `left: -1.5em`, which shifts the box without
+     removing its space and pushes content past the viewport (horizontal scroll).
+     A negative margin pulls the box properly, giving a true full-bleed. */
+  .mid-section-image { width: calc(100% + 2.3em); margin-left: -1.15em; left: 0; }
+  .col.photo-inset { padding: 1.25em 0; }
+  .column-photo._2.small.hop-nominee { min-height: 360px; }
+  /* anchor to the bottom of the fixed 800px hero so it can't be clipped;
+     lvh-based padding is unreliable here because mobile browser chrome changes it */
+  .hero_content.middle.home-quote-lower { justify-content: flex-end; padding-top: 0; padding-bottom: 4.5em; }
+  /* oversized display type on small screens */
+  .page-title, .page-title.left-align { font-size: 2.6em; }
+  h1, .h1 { font-size: 2.6em; }
+  .section-2-blurb.page-title-blurb.intro-text, .intro-text { font-size: 1.2em; }
+  .quote { font-size: 1.5em; }
+  .card-title.large { font-size: 1.6em; }
 }

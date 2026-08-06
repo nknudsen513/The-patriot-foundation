@@ -18,28 +18,118 @@
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
   <style>
-    /* --- Rush Revere page-local styles --- */
-    .rr-panel { display:flex; align-items:center; justify-content:center; width:100%; min-height:75vh; padding:3em; background-color:#f2f0eb; }
-    .rr-panel.navy { background-color:#0d1b34; }
-    .rr-panel img { display:block; width:100%; height:auto; }
-    .rr-wordmark { max-width:420px; }
-    .rr-portrait { max-width:400px; box-shadow:0 10px 40px rgba(0,0,0,.25); }
-    .rr-cover { max-width:330px; box-shadow:0 10px 40px rgba(0,0,0,.25); }
-    .rr-books-lineup { width:100%; max-width:1100px; margin:0 auto; display:block; }
-    .rr-vendor-item { flex:none; width:25%; padding:1.5em 1.5%; display:flex; }
-    .rr-vendor-box { display:flex; align-items:center; justify-content:center; width:100%; min-height:7em; padding:1em; text-align:center;
-      border:2px dashed #c9c9c9; border-radius:4px; background-color:#fff; color:#0d1b34; text-decoration:none;
-      font-size:1em; font-weight:600; line-height:1.3; transition:border-color .2s, box-shadow .2s; }
-    .rr-vendor-box:hover { border-color:#a7192f; box-shadow:0 4px 18px rgba(0,0,0,.08); }
-    .rr-vendor-note { display:block; margin-top:.4em; font-size:.7em; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:#9a9a9a; }
-    .rr-gallery { width:100%; display:block; }
-    .rr-highlights li { margin-bottom:.6em; }
+    /* --- Rush Revere page-local styles -----------------------------------
+       No navy page header on this page: the banner leads, so .rr-top carries
+       the top padding that normally clears the fixed navbar. Nothing here
+       modifies the shared Webflow stylesheet. ------------------------- */
+
+    .rr-wrap { max-width: 1180px; margin: 0 auto; }
+    .rr-top { padding-top: 9em; padding-bottom: 4em; }
+    .rr-banner { width: 100%; max-width: 720px; height: auto; margin: 0 auto; display: block; }
+
+    /* headings */
+    .rr-head { text-align: center; margin-bottom: 2.5em; }
+    .rr-head h1, .rr-head h2 { margin-bottom: .45em; }
+    .rr-head hr { border: 0; border-top: 2px solid var(--navy); margin: 0; }
+    .rr-head-inline { display: flex; align-items: center; gap: 1.5em; margin-bottom: 2.8em; }
+    .rr-head-inline:before, .rr-head-inline:after { content: ""; flex: 1; border-top: 1px solid #b9b9b9; }
+    .rr-head-inline h2 { margin: 0; white-space: nowrap; font-size: 2.1em; }
+
+    /* letter */
+    .rr-letter-row { display: flex; align-items: center; gap: 4em; }
+    .rr-letter { flex: 1 1 52%; min-width: 0; }
+    .rr-letter p { font-size: 1.12em; line-height: 1.75; margin-bottom: 1.35em; }
+    .rr-signature { display: block; width: 100%; max-width: 460px; height: auto; margin: 1.4em 0 0; }
+    .rr-letter-media { flex: 1 1 48%; min-width: 0; }
+    .rr-letter-media img { width: 100%; height: auto; display: block; }
+
+    /* About the Series — clean two-column, no float wrapping */
+    .rr-about-row { display: flex; align-items: flex-start; gap: 3.5em; }
+    .rr-about-copy { flex: 1 1 auto; min-width: 0; font-size: 1.05em; line-height: 1.75; }
+    .rr-about-copy p { margin-bottom: 1.3em; }
+    .rr-about-copy p:last-child { margin-bottom: 0; }
+    .rr-about-media { flex: 0 0 290px; max-width: 290px; }
+    .rr-about-media img { width: 100%; height: auto; display: block; box-shadow: 0 10px 34px rgba(0,0,0,.22); }
+    .rr-lead { font-size: 1.2em; line-height: 1.55; font-weight: 600; }
+
+    /* summary callout */
+    .rr-callout { border-left: 4px solid var(--red); background: #f5f5f5; padding: 1.5em 1.9em; margin: 2.2em 0; }
+    .rr-callout h3 { margin: 0 0 .5em; font-size: 1em; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--red); }
+    .rr-callout p { font-size: 1.05em; line-height: 1.7; margin: 0 0 1em; }
+    .rr-callout p:last-child { margin-bottom: 0; }
+
+    /* purchase block */
+    .rr-purchase { margin-top: 3.5em; padding-top: 3em; border-top: 1px solid #e2e2e2; text-align: center; }
+    .rr-purchase h3 { margin: 0 0 .6em; font-family: 'Freight Big', 'Times New Roman', serif;
+      font-size: 2em; font-weight: 300; letter-spacing: .05em; text-transform: uppercase; }
+    .rr-purchase p { max-width: 60ch; margin: 0 auto; font-size: 1.05em; line-height: 1.7; }
+    .rr-vendors { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4em; margin-top: 2.2em; }
+    .rr-vendor-box { flex: 0 0 auto; width: 12.5em; min-height: 5.2em; display: flex; align-items: center;
+      justify-content: center; padding: .9em; text-align: center; border: 1px solid #d6d6d6; border-radius: 3px;
+      background: #fff; color: var(--navy); text-decoration: none; font-size: .95em; font-weight: 700;
+      letter-spacing: .02em; line-height: 1.3; transition: border-color .2s, box-shadow .2s; }
+    .rr-vendor-box:hover { border-color: var(--red); box-shadow: 0 4px 18px rgba(0,0,0,.09); }
+    .rr-vendor-note { display: block; margin-top: .35em; font-size: .68em; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase; color: #a2a2a2; }
+    .rr-stars { display: flex; justify-content: center; gap: .5em; margin-top: 2.2em; }
+    .rr-stars img { width: 1.6em; height: 1.6em; display: block; }
+
+    /* Series Highlights */
+    .rr-hl-row { display: flex; align-items: center; gap: 2em; }
+    .rr-hl-copy { flex: 1 1 auto; min-width: 0; }
+    .rr-hl-media { flex: 0 0 300px; max-width: 300px; }
+    .rr-hl-media img { width: 100%; height: auto; display: block; box-shadow: 0 12px 40px rgba(0,0,0,.24); }
+    .rr-star-list { list-style: none; margin: 0; padding: 0; }
+    .rr-star-list li { position: relative; padding-left: 2.2em; margin-bottom: .95em;
+      font-size: 1.05em; line-height: 1.5; }
+    .rr-star-list li:before { content: ""; position: absolute; left: 0; top: .15em; width: 1.25em; height: 1.25em;
+      background: url('images/star-gold.svg') no-repeat 50% / contain; }
+
+    /* book series order — plain numbered list under the highlights */
+    .rr-order { margin-top: 2.2em; padding-top: 1.8em; border-top: 1px solid #d3d3d3; }
+    .rr-order h3 { margin: 0 0 .9em; font-size: 1em; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--red); }
+    .rr-booklist { list-style: none; margin: 0; padding: 0; counter-reset: bk; }
+    .rr-booklist li { position: relative; padding-left: 2.2em; margin-bottom: .55em;
+      font-size: 1.02em; line-height: 1.5; font-style: italic; }
+    .rr-booklist li:before { counter-increment: bk; content: counter(bk) "."; position: absolute; left: 0; top: 0;
+      font-family: 'Freight Big', 'Times New Roman', serif; font-style: normal; font-size: 1.15em;
+      color: var(--red); line-height: 1.35; }
+
+    /* mosaic gallery */
+    .rr-mosaic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1em; }
+    .rr-mcol { display: flex; flex-direction: column; gap: 1.1em; }
+    .rr-mcol img { width: 100%; display: block; object-fit: cover; }
+    .rr-mcol.tall-first img:first-child  { aspect-ratio: 100/92; }
+    .rr-mcol.tall-first img:last-child   { aspect-ratio: 100/82; }
+    .rr-mcol.short-first img:first-child { aspect-ratio: 100/75; }
+    .rr-mcol.short-first img:last-child  { aspect-ratio: 100/99; }
+
     @media screen and (max-width: 991px) {
-      .rr-vendor-item { width:50%; }
-      .rr-panel { min-height:0; padding:3em 2em; }
+      .rr-top { padding-top: 7em; }
+      .rr-letter-row, .rr-about-row, .rr-hl-row { flex-direction: column; gap: 2.5em; }
+      .rr-about-media, .rr-hl-media { max-width: 280px; margin: 0 auto; flex-basis: auto; }
+      .rr-mosaic { grid-template-columns: repeat(2, 1fr); }
+      .rr-head-inline h2 { font-size: 1.6em; white-space: normal; }
     }
     @media screen and (max-width: 767px) {
-      .rr-panel { padding:2.5em 1.5em; }
+      .rr-top { padding-top: 6em; padding-bottom: 2.5em; }
+      .rr-mosaic { grid-template-columns: 1fr; }
+      .rr-mcol img { aspect-ratio: 100/70 !important; }
+      .rr-vendor-box { flex: 1 1 calc(50% - .7em); width: auto; min-height: 4.6em; }
+      .rr-letter p, .rr-about-copy { font-size: 1em; }
+      .rr-callout { padding: 1.2em 1.3em; }
+      .rr-purchase { margin-top: 2.5em; padding-top: 2.2em; }
+      .rr-purchase h3, .rr-order h3 { font-size: 1.5em; }
+      .rr-head-inline { gap: 1em; margin-bottom: 2em; }
+    }
+    @media screen and (max-width: 479px) {
+      .rr-top { padding-top: 5.5em; }
+      .rr-vendor-box { flex: 1 1 100%; }
+      .rr-head-inline h2 { font-size: 1.35em; }
+      .rr-signature { max-width: 300px; }
+      .rr-lead { font-size: 1.1em; }
     }
   </style>
 </head>
@@ -48,7 +138,7 @@
     <div data-collapse="all" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
       <div class="nav-container">
         <div class="nav-inner-block">
-          <a href="index.html" class="brand w-nav-brand"><img sizes="220px" srcset="images/rl-patriot-foundation-logo-p-500.png 500w, images/rl-patriot-foundation-logo-p-800.png 800w, images/rl-patriot-foundation-logo.png 1172w" alt="2026 Rush Limbaugh Patriot Foundation" src="images/rl-patriot-foundation-logo.png" class="logo"></a>
+          <a href="index.html" class="brand w-nav-brand"><img sizes="300px" srcset="images/rl-patriot-foundation-logo-p-500.png 500w, images/rl-patriot-foundation-logo-p-800.png 800w, images/rl-patriot-foundation-logo.png 1400w" alt="2026 Rush Limbaugh Patriot Foundation" src="images/rl-patriot-foundation-logo.png" class="logo"></a>
           <div class="nav-col-1 cta">
             <ul role="list" class="nav-menu-block w-list-unstyled">
               <li class="list-item">
@@ -179,173 +269,133 @@
   </div>
   <div class="page-content">
 
-    <!-- ===== TOP BAR TEXT + HORIZONTAL PHOTO (Picture 1) ===== -->
-    <div class="section section2 page-header-section">
-      <div class="section2-wrap page-header-inner">
-        <div class="page-title-wrap">
-          <div class="code-hide w-embed w-script">
-            <script>
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-        var webflowBadge = document.querySelector('.w-webflow-badge');
-        if (webflowBadge) {
-            webflowBadge.style.setProperty('display', 'none', 'important');
-        }
-    }, 100);
-});
-</script>
-          </div>
-          <h1 class="page-title">Adventures of Rush Revere</h1>
-          <div class="decoline"></div>
-          <div class="section-2-blurb page-title-blurb">The Adventures of Rush Revere is a #1 New York Times bestselling middle grade book series by Rush and Kathryn Adams Limbaugh that makes American history fun and exciting. Through time travel with history teacher Rush Revere, Liberty the horse and the Manchester Middle School crew, young readers experience America&rsquo;s founding stories in a way that brings the past to life.</div>
-        </div>
-        <div class="mid-section-image"><img src="images/rush-revere-books-lineup.png" loading="eager" alt="The five books in the Adventures of Rush Revere series" class="rr-books-lineup"></div>
-      </div>
-      <div class="section-white-bg-footer page-header-white-bg"></div>
-    </div>
-
-    <!-- ===== LEFT TEXT / VERTICAL PHOTO RIGHT (Picture 2) ===== -->
-    <div class="section no-padding">
-      <div>
-        <div class="row no-gap">
-          <div class="col">
-            <div class="container half">
-              <div class="column-photo-text">
-                <h2 class="h2 left-align">Liberty and the Crew</h2>
-                <div class="spacer _1-on-mobile"></div>
-                <div class="section-2-blurb dark">Clip-clop, knock knock! Is this thing on? Helloooooo! It&rsquo;s ME, LIBERTY! I&rsquo;m the time-traveling horse, and I&rsquo;m SOOOOO happy you found MY VERY OWN page. Oops &ndash; I mean OUR, mine and Rush Revere&rsquo;s and the whole middle school crew&rsquo;s page.</div>
-                <div class="spacer"></div>
-                <div class="section-2-blurb dark">Guess what? It&rsquo;s America&rsquo;s 250th anniversary &ndash; WOOO! That is even older than my ol&rsquo; friend Rush Revere. That means 250 candles and a REALLY big birthday cake. I volunteer to taste it first! For history.</div>
-                <div class="spacer"></div>
-                <div class="section-2-blurb dark">HAPPY BIRTHDAY USA! USA! USA! C&rsquo;mon let&rsquo;s go&hellip; Rush, Rush, Rushing to History!</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="rr-panel"><img src="images/rush-revere-liberty-wordmark.png" loading="lazy" alt="Liberty and the Crew" class="rr-wordmark"></div>
-          </div>
-        </div>
+    <!-- ============ BANNER (no navy header on this page) ============ -->
+    <div class="section rr-top">
+      <div class="rr-wrap">
+        <img src="images/rush-revere-books-lineup.png" loading="eager" alt="The five books in the Adventures of Rush Revere series" class="rr-banner">
       </div>
     </div>
 
-    <!-- ===== LEFT PHOTO (Picture 3) / RIGHT TEXT ===== -->
-    <div class="section no-padding">
-      <div>
-        <div class="row no-gap">
-          <div class="col">
-            <div class="rr-panel navy"><img src="images/rush-revere-crew-dc.jpg" loading="lazy" alt="Rush Revere, Liberty the horse and the Manchester Middle School crew in Washington, D.C." class="rr-portrait"></div>
-          </div>
-          <div class="col">
-            <div class="container half">
-              <div class="column-photo-text">
-                <h2 class="h2 left-align">Rush, Rush, Rushing to History</h2>
-                <div class="spacer _1-on-mobile"></div>
-                <div class="section-2-blurb dark">America is turning 250 &ndash; the perfect time for middle grade students to Rush, Rush, Rush into history! The Rush Revere series is a five-book middle grade series that lets young readers travel back in time and experience American history firsthand. Join American history teacher Rush Revere, his hilarious sidekick Liberty the talking Horse, and the Manchester Middle School students as they meet famous figures, visit important places, and see history happen right in front of them. Written by Rush and Kathryn Adams Limbaugh, this #1 New York Times bestselling and Children&rsquo;s Choice Award-winning series brings America&rsquo;s founding story to life for young readers.</div>
-                <div class="spacer"></div>
-                <div class="section-2-blurb dark"><strong>For America&rsquo;s 250th anniversary, students don&rsquo;t just read about history &ndash; they jump right into it with the Crew.</strong></div>
-                <div class="spacer"></div>
-                <div class="section-2-blurb dark">Through time travel, readers join Rush Revere, Liberty the horse, and the Manchester Middle School students as they go directly into America&rsquo;s founding story. They visit Holland, the Mayflower, Plymouth Colony, colonial Boston, Revolutionary War sites, Washington, D.C., Fort McHenry, and the early presidency. Along the way, they meet historical figures including William Bradford, Squanto, Samuel Adams, Paul Revere, George Washington, Abigail Adams, Thomas Jefferson, James Madison, Dolley Madison, and Francis Scott Key. It&rsquo;s American history up close &ndash; exciting, memorable, and fun for middle grade readers.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== AVAILABLE TO PURCHASE ===== -->
+    <!-- ============ LIBERTY'S LETTER ============ -->
     <div class="section section3 content gray">
       <div class="section3-wrap">
-        <div class="container">
-          <div class="centered">
-            <h2 class="h2">Available to Purchase</h2>
-            <div class="decoline"></div>
-            <div class="section-2-blurb page-title-blurb intro-text">Available to purchase now! All five books and audiobooks are available in-store and online through retailers including Barnes &amp; Noble, Books-A-Million, Amazon, Walmart, and other bookstores nationwide.</div>
+        <div class="rr-wrap">
+          <div class="rr-head">
+            <h1 class="h2">The Adventures of Rush Revere<sup>&reg;</sup> Series</h1>
+            <hr>
           </div>
-          <div class="spacer _2"></div>
-          <div class="organizations-block">
-            <div class="rr-vendor-item"><a href="#" class="rr-vendor-box">Barnes &amp; Noble<span class="rr-vendor-note">Logo + link to come</span></a></div>
-            <div class="rr-vendor-item"><a href="#" class="rr-vendor-box">Books-A-Million<span class="rr-vendor-note">Logo + link to come</span></a></div>
-            <div class="rr-vendor-item"><a href="#" class="rr-vendor-box">Amazon<span class="rr-vendor-note">Logo + link to come</span></a></div>
-            <div class="rr-vendor-item"><a href="#" class="rr-vendor-box">Walmart<span class="rr-vendor-note">Logo + link to come</span></a></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== SERIES HIGHLIGHTS (left text / right photo, Picture 4) ===== -->
-    <div class="section no-padding">
-      <div>
-        <div class="row no-gap">
-          <div class="col">
-            <div class="container half">
-              <div class="column-photo-text">
-                <h2 class="h2 left-align">Series Highlights</h2>
-                <div class="decoline left-align"></div>
-                <div class="w-richtext rr-highlights">
-                  <ul role="list">
-                    <li>#1 New York Times Bestselling Series</li>
-                    <li>2014 Children&rsquo;s Choice Awards, Author of the Year</li>
-                    <li>2017 homeschool.com Back to Homeschool Award</li>
-                    <li>Featured in Scholastic Magazine Nationwide</li>
-                    <li>Series included in the Accelerated Reader Program</li>
-                    <li>5 Star Reviews by Teachers, Parents, and Publications</li>
-                  </ul>
-                </div>
-                <div class="spacer"></div>
-                <h3 class="card-title large">Book Series Order</h3>
-                <div class="w-richtext rr-highlights">
-                  <ol role="list" class="list">
-                    <li>Rush Revere and the Brave Pilgrims</li>
-                    <li>Rush Revere and the First Patriots</li>
-                    <li>Rush Revere and the American Revolution</li>
-                    <li>Rush Revere and the Star-Spangled Banner</li>
-                    <li>Rush Revere and the Presidency</li>
-                  </ol>
-                </div>
-              </div>
+          <div class="rr-letter-row">
+            <div class="rr-letter">
+              <p>Clip-clop, knock knock! Is this thing on? Helloooooo!</p>
+              <p>It&rsquo;s ME, LIBERTY! I&rsquo;m the time-traveling horse, and I&rsquo;m SOOOOO happy you found MY VERY OWN page. Oops &ndash; I mean OUR, mine and Rush Revere&rsquo;s and the whole middle school crew&rsquo;s page.</p>
+              <p>Guess what? It&rsquo;s America&rsquo;s 250th anniversary &ndash; WOOO! That is even older than my ol&rsquo; friend Rush Revere. That means 250 candles and a REALLY big birthday cake. I volunteer to taste it first! For history. HAPPY BIRTHDAY USA! USA! USA!</p>
+              <p>C&rsquo;mon let&rsquo;s go&hellip; Rush, Rush, Rushing to History!</p>
+              <img src="images/rush-revere-liberty-wordmark.png" loading="lazy" alt="Liberty and the Crew" class="rr-signature">
+            </div>
+            <div class="rr-letter-media">
+              <img src="images/rush-revere-liberty-bill.png" loading="lazy" alt="Liberty the horse holding a Bill of Rights t-shirt">
             </div>
           </div>
-          <div class="col">
-            <div class="rr-panel"><img src="images/rush-revere-presidency-cover.jpg" loading="lazy" alt="Rush Revere and the Presidency book cover" class="rr-cover"></div>
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- ===== GALLERY MONTAGE (Picture 5) ===== -->
+    <!-- ============ ABOUT THE SERIES ============ -->
     <div class="section section3 content">
       <div class="section3-wrap">
-        <div class="container">
-          <div class="centered">
-            <h2 class="h2">Readers, Classrooms &amp; Families</h2>
-            <div class="decoline"></div>
+        <div class="rr-wrap">
+          <div class="rr-head-inline"><h2 class="h2">About the Series</h2></div>
+          <div class="rr-about-row">
+            <div class="rr-about-copy">
+              <p class="rr-lead">America is turning 250 &ndash; the perfect time for middle grade students to Rush, Rush, Rush into history!</p>
+              <p>The Rush Revere series is a five-book middle grade series that lets young readers travel back in time and experience American history firsthand. Join American history teacher Rush Revere, his hilarious sidekick Liberty the talking Horse, and the Manchester Middle School students as they meet famous figures, visit important places, and see history happen right in front of them.</p>
+              <p>Written by Rush and Kathryn Adams Limbaugh, this #1 <em>New York Times</em> bestselling and Children&rsquo;s Choice Award-winning series brings America&rsquo;s founding story to life for young readers.</p>
+            </div>
+            <div class="rr-about-media">
+              <img src="images/rush-revere-crew-dc.jpg" loading="lazy" alt="Rush Revere, Liberty and the Manchester Middle School crew in Washington, D.C.">
+            </div>
           </div>
-          <div class="spacer _2"></div>
+          <div class="rr-callout">
+            <h3>Summary</h3>
+            <p>For America&rsquo;s 250th anniversary, students don&rsquo;t just read about history &ndash; they jump right into it with the Crew.</p>
+            <p>Through time travel, readers join Rush Revere, Liberty the horse, and the Manchester Middle School students as they go directly into America&rsquo;s founding story. They visit Holland, the <em>Mayflower</em>, Plymouth Colony, colonial Boston, Revolutionary War sites, Washington, D.C., Fort McHenry, and the early presidency. Along the way, they meet historical figures including William Bradford, Squanto, Samuel Adams, Paul Revere, George Washington, Abigail Adams, Thomas Jefferson, James Madison, Dolley Madison, and Francis Scott Key.</p>
+            <p>It&rsquo;s American history up close &ndash; exciting, memorable, and fun for middle grade readers.</p>
+          </div>
+          <div class="rr-purchase">
+            <h3>Available to Purchase</h3>
+            <p>All five books and audiobooks are available in-store and online through retailers including <strong>Barnes &amp; Noble, Books-A-Million, Amazon, Walmart,</strong> and other bookstores nationwide.</p>
+            <div class="rr-vendors">
+              <a href="#" class="rr-vendor-box">amazon.com<span class="rr-vendor-note">Logo + link to come</span></a>
+              <a href="#" class="rr-vendor-box">BARNES &amp; NOBLE<span class="rr-vendor-note">Logo + link to come</span></a>
+              <a href="#" class="rr-vendor-box">BAM! Books-A-Million<span class="rr-vendor-note">Logo + link to come</span></a>
+              <a href="#" class="rr-vendor-box">Walmart<span class="rr-vendor-note">Logo + link to come</span></a>
+            </div>
+            <div class="rr-stars">
+              <img src="images/star-gold.svg" loading="lazy" alt="">
+              <img src="images/star-gold.svg" loading="lazy" alt="">
+              <img src="images/star-gold.svg" loading="lazy" alt="">
+              <img src="images/star-gold.svg" loading="lazy" alt="">
+              <img src="images/star-gold.svg" loading="lazy" alt="">
+            </div>
+          </div>
         </div>
-        <div class="mid-section-image"><img src="images/rush-revere-gallery-montage.png" loading="lazy" alt="Students, classrooms and families reading the Adventures of Rush Revere series" class="rr-gallery"></div>
       </div>
     </div>
 
-    <!-- ===== CTA ===== -->
-    <div class="section photo">
-      <div class="card gray-bg">
-        <div class="container small">
-          <div class="row get-started-row">
-            <div class="col cta-card">
-              <div>
-                <h2 class="h2 left-align get-started">Get Involved</h2>
-                <div class="card-title no-bottom-margin get-started-blutb">Help bring American history to life for the next generation of readers.</div>
+    <!-- ============ SERIES HIGHLIGHTS ============ -->
+    <div class="section section3 content gray">
+      <div class="section3-wrap">
+        <div class="rr-wrap">
+          <div class="rr-head-inline"><h2 class="h2">Series Highlights</h2></div>
+          <div class="rr-hl-row">
+            <div class="rr-hl-copy">
+              <ul role="list" class="rr-star-list">
+                <li>#1 <em>New York Times</em> Bestselling Series</li>
+                <li>2014 Children&rsquo;s Choice Awards, Author of the Year</li>
+                <li>2017 homeschool.com Back to Homeschool Award</li>
+                <li>Featured in <em>Scholastic</em> Magazine Nationwide</li>
+                <li>Series included in the Accelerated Reader Program</li>
+                <li>5 Star Reviews by Teachers, Parents, and Publications</li>
+              </ul>
+              <div class="rr-order">
+                <h3>Book Series Order</h3>
+                <ol role="list" class="rr-booklist">
+                  <li>Rush Revere and the Brave Pilgrims</li>
+                  <li>Rush Revere and the First Patriots</li>
+                  <li>Rush Revere and the American Revolution</li>
+                  <li>Rush Revere and the Star-Spangled Banner</li>
+                  <li>Rush Revere and the Presidency</li>
+                </ol>
               </div>
             </div>
-            <div class="col shrink cta-col">
-              <div class="link-block right-align get-started">
-                <a href="get-involved.html" class="arrow-button w-inline-block w-clearfix">
-                  <div class="scroll-arrow-txt">Learn More</div><img src="images/arrow-small-right.svg" loading="lazy" alt="" class="cta-icon">
-                </a>
-                <a href="#" class="arrow-button primary red w-inline-block w-clearfix">
-                  <div class="scroll-arrow-txt dark">Donate</div><img src="images/arrow-small-right-white.svg" loading="lazy" alt="" class="cta-icon">
-                </a>
-              </div>
+            <div class="rr-hl-media">
+              <img src="images/rush-revere-presidency-cover.jpg" loading="lazy" alt="Rush Revere and the Presidency book cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOSAIC GALLERY ============ -->
+    <div class="section section3 content">
+      <div class="section3-wrap">
+        <div class="rr-wrap">
+          <div class="rr-head">
+            <h2 class="h2">Readers, Classrooms &amp; Families</h2>
+            <hr>
+          </div>
+          <div class="rr-mosaic">
+            <div class="rr-mcol tall-first">
+              <img src="images/rr-gallery-1.jpg" loading="lazy" alt="A young reader with the Rush Revere series and an American flag blanket">
+              <img src="images/rr-gallery-3.jpg" loading="lazy" alt="A class dressed as historical and modern figures">
+            </div>
+            <div class="rr-mcol short-first">
+              <img src="images/rr-gallery-6.jpg" loading="lazy" alt="Children in colonial costume holding Rush Revere and the Brave Pilgrims">
+              <img src="images/rr-gallery-5.jpg" loading="lazy" alt="Readers with Rush Revere books at the Old State House in Boston">
+            </div>
+            <div class="rr-mcol tall-first">
+              <img src="images/rr-gallery-2.jpg" loading="lazy" alt="Students reading the Rush Revere series in a circle">
+              <img src="images/rr-gallery-4.jpg" loading="lazy" alt="A young reader holding Rush Revere and the Brave Pilgrims">
             </div>
           </div>
         </div>
