@@ -3283,8 +3283,8 @@ blockquote {
 
 /* Classes replacing former inline styles, so they can respond to breakpoints */
 .hero_content.middle.home-quote-lower { padding-top: 34lvh; padding-bottom: 4lvh; }
-.col.photo-inset { padding: 2.5em 3em; }
-.column-photo._2.small.hop-nominee { min-height: 560px; }
+.col.photo-inset { padding: 2.5em 3em 2.5em 1.5em; }
+.column-photo._2.small.hop-nominee { min-height: 0; aspect-ratio: 3 / 2; }
 
 @media screen and (max-width: 991px) {
   .section { padding-left: 2.25em; padding-right: 2.25em; }
@@ -3299,7 +3299,7 @@ blockquote {
   .section.section2 { padding-left: 1.75em; padding-right: 1.75em; }
   .section.no-padding.hall-of-patriot-section { padding-left: 1.75em; padding-right: 1.75em; }
   .col.photo-inset { padding: 1.5em 0; }
-  .column-photo._2.small.hop-nominee { min-height: 440px; }
+  .column-photo._2.small.hop-nominee { min-height: 0; aspect-ratio: 3 / 2; }
   .hero_content.middle.home-quote-lower { padding-top: 26lvh; padding-bottom: 3lvh; }
   /* the search form carries a hard 400px width — cap it so it can't overflow */
   .search-pop-up, .search-pop-up-wrapper { width: 100%; max-width: 100%; }
@@ -3314,7 +3314,7 @@ blockquote {
      A negative margin pulls the box properly, giving a true full-bleed. */
   .mid-section-image { width: calc(100% + 2.3em); margin-left: -1.15em; left: 0; }
   .col.photo-inset { padding: 1.25em 0; }
-  .column-photo._2.small.hop-nominee { min-height: 360px; }
+  .column-photo._2.small.hop-nominee { min-height: 0; aspect-ratio: 3 / 2; }
   /* anchor to the bottom of the fixed 800px hero so it can't be clipped;
      lvh-based padding is unreliable here because mobile browser chrome changes it */
   .hero_content.middle.home-quote-lower { justify-content: flex-end; padding-top: 0; padding-bottom: 4.5em; }
@@ -3324,4 +3324,36 @@ blockquote {
   .section-2-blurb.page-title-blurb.intro-text, .intro-text { font-size: 1.2em; }
   .quote { font-size: 1.5em; }
   .card-title.large { font-size: 1.6em; }
+}
+
+/* ==========================================================================
+   BLACK & WHITE PHOTOGRAPHY — site-wide
+   Applied to photo elements only, so SVG icons, the red arrows and the gold
+   rules keep their colour.
+
+   Two deliberate exceptions:
+     · .keep-colour  — the gold-microphone studio photo on the home page,
+                       which carries the one dash of colour the owners asked
+                       to keep.
+     · .no-bw        — set on <body> of rush-revere.html, which stays in full
+                       colour throughout.
+   ========================================================================== */
+body:not(.no-bw) .page-content .hero-image,
+body:not(.no-bw) .page-content .page-image,
+body:not(.no-bw) .page-content .column-photo,
+body:not(.no-bw) .page-content .card-image,
+body:not(.no-bw) .page-content img.image,
+body:not(.no-bw) .page-content img.card-image,
+body:not(.no-bw) .page-content img.bio-photo,
+body:not(.no-bw) .page-content .col.hide-on-mobile img,
+body:not(.no-bw) .page-content .mid-section-image img {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+
+/* the one dash of colour: gold microphone */
+body:not(.no-bw) .page-content img.keep-colour,
+body:not(.no-bw) .page-content .keep-colour {
+  filter: none;
+  -webkit-filter: none;
 }
