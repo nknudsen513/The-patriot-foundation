@@ -18,127 +18,115 @@
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
   <style>
-    /* --- Rush Revere page-local styles -----------------------------------
-       No navy page header on this page: the banner leads, so .rr-top carries
-       the top padding that normally clears the fixed navbar. Nothing here
-       modifies the shared Webflow stylesheet. ------------------------- */
+    /* --- Rush Revere ------------------------------------------------------
+       Editorial / book-jacket treatment, but built from the site's own
+       navy + red + Freight Big vocabulary so it reads as the same site.
+       This page stays in full colour (body carries .no-bw).
+       ------------------------------------------------------------------- */
 
     .rr-wrap { max-width: 1180px; margin: 0 auto; }
-    .rr-top { padding-top: 9em; padding-bottom: 4em; }
-    .rr-banner { width: 100%; max-width: 720px; height: auto; margin: 0 auto; display: block; }
 
-    /* headings */
-    .rr-head { text-align: center; margin-bottom: 2.5em; }
-    .rr-head h1, .rr-head h2 { margin-bottom: .45em; }
-    .rr-head hr { border: 0; border-top: 2px solid var(--navy); margin: 0; }
-    .rr-head-inline { display: flex; align-items: center; gap: 1.5em; margin-bottom: 2.8em; }
-    .rr-head-inline:before, .rr-head-inline:after { content: ""; flex: 1; border-top: 1px solid #b9b9b9; }
-    .rr-head-inline h2 { margin: 0; white-space: nowrap; font-size: 2.1em; }
+    /* ---- summary: copy left, photo right ---- */
+    .rr-summary { display: flex; align-items: center; gap: 3em; }
+    .rr-summary-copy { flex: 1 1 0%; min-width: 0; }
+    .rr-summary-copy .section-2-blurb { max-width: none; margin-left: 0; margin-right: 0; text-align: left; }
+    .rr-summary-media { flex: 0 0 46%; max-width: 620px; min-width: 0; }
+    .rr-summary-media img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 46%;
+      display: block; box-shadow: 0 14px 40px rgba(0,0,0,.24); }
 
-    /* letter */
-    .rr-letter-row { display: flex; align-items: center; gap: 4em; }
-    .rr-letter { flex: 1 1 52%; min-width: 0; }
-    .rr-letter p { font-size: 1.12em; line-height: 1.75; margin-bottom: 1.35em; }
-    .rr-signature { display: block; width: 100%; max-width: 460px; height: auto; margin: 1.4em 0 0; }
-    .rr-letter-media { flex: 1 1 48%; min-width: 0; }
-    .rr-letter-media img { width: 100%; height: auto; display: block; }
+    /* ---- media: two equal videos, audio under the first ---- */
+    .rr-media { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; align-items: start; }
+    .rr-media video { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000;
+      object-fit: contain; box-shadow: 0 14px 44px rgba(0,0,0,.28); }
+    .rr-media-caption { display: block; margin-top: .75em; font-size: .78em; letter-spacing: .12em;
+      text-transform: uppercase; color: #8d8d8d; }
 
-    /* About the Series — clean two-column, no float wrapping */
-    .rr-about-row { display: flex; align-items: flex-start; gap: 3.5em; }
-    .rr-about-copy { flex: 1 1 auto; min-width: 0; font-size: 1.05em; line-height: 1.75; }
-    .rr-about-copy p { margin-bottom: 1.3em; }
-    .rr-about-copy p:last-child { margin-bottom: 0; }
-    .rr-about-media { flex: 0 0 290px; max-width: 290px; }
-    .rr-about-media img { width: 100%; height: auto; display: block; box-shadow: 0 10px 34px rgba(0,0,0,.22); }
-    .rr-lead { font-size: 1.2em; line-height: 1.55; font-weight: 600; }
+    /* custom audio player — deliberately quiet, sits under the video */
+    .rr-audio { display: flex; align-items: center; gap: .8em; margin-top: 1em;
+      padding: .55em .8em; border: 1px solid #dcdcdc; border-radius: 3px; background: #fff; }
+    .rr-audio-btn { flex: none; width: 2em; height: 2em; border: 1px solid #cfcfcf; border-radius: 50%;
+      background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      padding: 0; transition: border-color .15s ease, background .15s ease; }
+    .rr-audio-btn:hover { border-color: var(--navy); background: #f6f6f6; }
+    .rr-audio-btn svg { width: .7em; height: .7em; fill: var(--navy); display: block; }
+    .rr-audio-btn .ico-pause { display: none; }
+    .rr-audio.is-playing .ico-play { display: none; }
+    .rr-audio.is-playing .ico-pause { display: block; }
+    .rr-audio-body { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: .8em; }
+    .rr-audio-label { flex: none; font-size: .68em; letter-spacing: .12em; text-transform: uppercase;
+      color: #9a9a9a; }
+    .rr-audio-bar { position: relative; flex: 1 1 auto; height: 3px; border-radius: 2px;
+      background: #e4e4e4; cursor: pointer; }
+    .rr-audio-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 2px;
+      background: var(--navy); pointer-events: none; }
+    .rr-audio-time { flex: none; font-size: .72em; font-variant-numeric: tabular-nums; color: #9a9a9a; }
 
-    /* summary callout */
-    .rr-callout { border-left: 4px solid var(--red); background: #f5f5f5; padding: 1.5em 1.9em; margin: 2.2em 0; }
-    .rr-callout h3 { margin: 0 0 .5em; font-size: 1em; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--red); }
-    .rr-callout p { font-size: 1.05em; line-height: 1.7; margin: 0 0 1em; }
-    .rr-callout p:last-child { margin-bottom: 0; }
+    /* ---- closing full-width band ---- */
+    .rr-band { width: 100%; aspect-ratio: 2.5 / 1; background-position: 70% 55%;
+      background-size: cover; background-repeat: no-repeat; border-top: 9px solid var(--red); }
 
-    /* purchase block */
-    .rr-purchase { margin-top: 3.5em; padding-top: 3em; border-top: 1px solid #e2e2e2; text-align: center; }
-    .rr-purchase h3 { margin: 0 0 .6em; font-family: 'Freight Big', 'Times New Roman', serif;
-      font-size: 2em; font-weight: 300; letter-spacing: .05em; text-transform: uppercase; }
-    .rr-purchase p { max-width: 60ch; margin: 0 auto; font-size: 1.05em; line-height: 1.7; }
+    /* ---- section headings ---- */
+    .rr-head { text-align: center; margin-bottom: 2.6em; }
+    .rr-head h2 { margin-bottom: .4em; }
+    .rr-head hr { border: 0; border-top: 2px solid var(--navy); margin: 0 auto; max-width: 8em; }
+    .rr-head.on-navy h2 { color: #fff; }
+    .rr-head.on-navy hr { border-top-color: #e6c37a; }
+
+    /* ---- five books: cover + copy, alternating ---- */
+    .rr-books { display: flex; flex-direction: column; gap: 3.2em; }
+    .rr-bookrow { display: flex; align-items: center; gap: 3em; }
+    .rr-bookrow:nth-child(even) { flex-direction: row-reverse; }
+    .rr-bookrow-media { flex: 0 0 210px; max-width: 210px; }
+    .rr-bookrow-media img { width: 100%; height: auto; display: block;
+      box-shadow: 0 16px 44px rgba(0,0,0,.30); }
+    .rr-bookrow-copy { flex: 1 1 auto; min-width: 0; }
+    .rr-booknum { display: block; font-family: 'Freight Big','Times New Roman',serif;
+      font-size: 2.6em; line-height: 1; color: var(--red); margin-bottom: .1em; }
+    .rr-bookrow-copy h3 { margin: 0 0 .5em; font-family: 'Freight Big','Times New Roman',serif;
+      font-size: 1.9em; font-weight: 300; line-height: 1.1; letter-spacing: .03em;
+      text-transform: uppercase; }
+    .rr-bookrow-copy p { margin: 0; font-size: 1.05em; line-height: 1.7; }
+
+    /* ---- full-bleed illustration ---- */
+    .rr-illus { width: 100%; display: block; }
+    .rr-illus-wrap { max-width: 1440px; margin: 0 auto; }
+
+    /* ---- purchase ---- */
+    .rr-purchase { text-align: center; }
+    .rr-purchase p { max-width: 62ch; margin: 0 auto; font-size: 1.05em; line-height: 1.7; }
     .rr-vendors { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4em; margin-top: 2.2em; }
     .rr-vendor-box { flex: 0 0 auto; width: 12.5em; min-height: 5.2em; display: flex; align-items: center;
       justify-content: center; padding: .9em; text-align: center; border: 1px solid #d6d6d6; border-radius: 3px;
       background: #fff; color: var(--navy); text-decoration: none; font-size: .95em; font-weight: 700;
-      letter-spacing: .02em; line-height: 1.3; transition: border-color .2s, box-shadow .2s; }
+      line-height: 1.3; transition: border-color .2s, box-shadow .2s; }
     .rr-vendor-box:hover { border-color: var(--red); box-shadow: 0 4px 18px rgba(0,0,0,.09); }
     .rr-vendor-note { display: block; margin-top: .35em; font-size: .68em; font-weight: 400;
       letter-spacing: .08em; text-transform: uppercase; color: #a2a2a2; }
     .rr-stars { display: flex; justify-content: center; gap: .5em; margin-top: 2.2em; }
     .rr-stars img { width: 1.6em; height: 1.6em; display: block; }
 
-    /* Series Highlights */
-    .rr-hl-row { display: flex; align-items: center; gap: 2em; }
-    .rr-hl-copy { flex: 1 1 auto; min-width: 0; }
-    .rr-hl-media { flex: 0 0 300px; max-width: 300px; }
-    .rr-hl-media img { width: 100%; height: auto; display: block; box-shadow: 0 12px 40px rgba(0,0,0,.24); }
-    .rr-star-list { list-style: none; margin: 0; padding: 0; }
-    .rr-star-list li { position: relative; padding-left: 2.2em; margin-bottom: .95em;
-      font-size: 1.05em; line-height: 1.5; }
-    .rr-star-list li:before { content: ""; position: absolute; left: 0; top: .15em; width: 1.25em; height: 1.25em;
-      background: url('images/star-gold.svg') no-repeat 50% / contain; }
-
-    /* book series order — plain numbered list under the highlights */
-    .rr-order { margin-top: 2.2em; padding-top: 1.8em; border-top: 1px solid #d3d3d3; }
-    .rr-order h3 { margin: 0 0 .9em; font-size: 1em; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--red); }
-    .rr-booklist { list-style: none; margin: 0; padding: 0; counter-reset: bk; }
-    .rr-booklist li { position: relative; padding-left: 2.2em; margin-bottom: .55em;
-      font-size: 1.02em; line-height: 1.5; font-style: italic; }
-    .rr-booklist li:before { counter-increment: bk; content: counter(bk) "."; position: absolute; left: 0; top: 0;
-      font-family: 'Freight Big', 'Times New Roman', serif; font-style: normal; font-size: 1.15em;
-      color: var(--red); line-height: 1.35; }
-
-    /* mosaic gallery */
-    .rr-mosaic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1em; }
-    .rr-mcol { display: flex; flex-direction: column; gap: 1.1em; }
-    .rr-mcol img { width: 100%; display: block; object-fit: cover; }
-    .rr-mcol.tall-first img:first-child  { aspect-ratio: 100/92; }
-    .rr-mcol.tall-first img:last-child   { aspect-ratio: 100/82; }
-    .rr-mcol.short-first img:first-child { aspect-ratio: 100/75; }
-    .rr-mcol.short-first img:last-child  { aspect-ratio: 100/99; }
-
     @media screen and (max-width: 991px) {
-      .rr-top { padding-top: 7em; }
-      .rr-letter-row, .rr-about-row, .rr-hl-row { flex-direction: column; gap: 2.5em; }
-      .rr-about-media, .rr-hl-media { max-width: 280px; margin: 0 auto; flex-basis: auto; }
-      .rr-mosaic { grid-template-columns: repeat(2, 1fr); }
-      .rr-head-inline h2 { font-size: 1.6em; white-space: normal; }
+      .rr-media { grid-template-columns: 1fr; gap: 2em; }
+      .rr-summary { flex-direction: column; gap: 2.2em; }
+      .rr-summary-media { max-width: 560px; margin: 0 auto; }
+      .rr-band { aspect-ratio: 16 / 9; }
+      .rr-bookrow, .rr-bookrow:nth-child(even) { flex-direction: column; gap: 1.6em; text-align: center; }
+      .rr-bookrow-media { flex-basis: auto; max-width: 190px; margin: 0 auto; }
     }
     @media screen and (max-width: 767px) {
-      .rr-top { padding-top: 6em; padding-bottom: 2.5em; }
-      .rr-mosaic { grid-template-columns: 1fr; }
-      .rr-mcol img { aspect-ratio: 100/70 !important; }
-      .rr-vendor-box { flex: 1 1 calc(50% - .7em); width: auto; min-height: 4.6em; }
-      .rr-letter p, .rr-about-copy { font-size: 1em; }
-      .rr-callout { padding: 1.2em 1.3em; }
-      .rr-purchase { margin-top: 2.5em; padding-top: 2.2em; }
-      .rr-purchase h3, .rr-order h3 { font-size: 1.5em; }
-      .rr-head-inline { gap: 1em; margin-bottom: 2em; }
+      .rr-vendor-box { flex: 1 1 calc(50% - .7em); width: auto; }
     }
     @media screen and (max-width: 479px) {
-      .rr-top { padding-top: 5.5em; }
       .rr-vendor-box { flex: 1 1 100%; }
-      .rr-head-inline h2 { font-size: 1.35em; }
-      .rr-signature { max-width: 300px; }
-      .rr-lead { font-size: 1.1em; }
     }
   </style>
 </head>
-<body class="body">
+<body class="body no-bw">
   <div class="navbar-outer">
     <div data-collapse="all" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
       <div class="nav-container">
         <div class="nav-inner-block">
-          <a href="index.html" class="brand w-nav-brand"><img sizes="300px" srcset="images/rl-patriot-foundation-logo-p-500.png 500w, images/rl-patriot-foundation-logo-p-800.png 800w, images/rl-patriot-foundation-logo.png 1400w" alt="2026 Rush Limbaugh Patriot Foundation" src="images/rl-patriot-foundation-logo.png" class="logo"></a>
+          <a href="index.html" class="brand w-nav-brand"><img sizes="300px" srcset="images/rl-patriot-foundation-logo-p-500.png 500w, images/rl-patriot-foundation-logo-p-800.png 800w, images/rl-patriot-foundation-logo.png 1256w" alt="2026 Rush Limbaugh Patriot Foundation" src="images/rl-patriot-foundation-logo.png" class="logo"></a>
           <div class="nav-col-1 cta">
             <ul role="list" class="nav-menu-block w-list-unstyled">
               <li class="list-item">
@@ -269,134 +257,222 @@
   </div>
   <div class="page-content">
 
-    <!-- ============ BANNER (no navy header on this page) ============ -->
-    <div class="section rr-top">
-      <div class="rr-wrap">
-        <img src="images/rush-revere-books-lineup.png" loading="eager" alt="The five books in the Adventures of Rush Revere series" class="rr-banner">
-      </div>
-    </div>
-
-    <!-- ============ LIBERTY'S LETTER ============ -->
-    <div class="section section3 content gray">
-      <div class="section3-wrap">
-        <div class="rr-wrap">
-          <div class="rr-head">
-            <h1 class="h2">The Adventures of Rush Revere<sup>&reg;</sup> Series</h1>
-            <hr>
+    <!-- ============ PAGE HEADER — same layout-2 pattern as Our Impact ============ -->
+    <div class="section section2 page-header-section layout-2">
+      <div class="section2-wrap page-header-inner layout2">
+        <div class="page-title-wrap layout-2">
+          <div class="code-hide w-embed w-script">
+            <script>
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var webflowBadge = document.querySelector('.w-webflow-badge');
+        if (webflowBadge) {
+            webflowBadge.style.setProperty('display', 'none', 'important');
+        }
+    }, 100);
+});
+</script>
           </div>
-          <div class="rr-letter-row">
-            <div class="rr-letter">
-              <p>Clip-clop, knock knock! Is this thing on? Helloooooo!</p>
-              <p>It&rsquo;s ME, LIBERTY! I&rsquo;m the time-traveling horse, and I&rsquo;m SOOOOO happy you found MY VERY OWN page. Oops &ndash; I mean OUR, mine and Rush Revere&rsquo;s and the whole middle school crew&rsquo;s page.</p>
-              <p>Guess what? It&rsquo;s America&rsquo;s 250th anniversary &ndash; WOOO! That is even older than my ol&rsquo; friend Rush Revere. That means 250 candles and a REALLY big birthday cake. I volunteer to taste it first! For history. HAPPY BIRTHDAY USA! USA! USA!</p>
-              <p>C&rsquo;mon let&rsquo;s go&hellip; Rush, Rush, Rushing to History!</p>
-              <img src="images/rush-revere-liberty-wordmark.png" loading="lazy" alt="Liberty and the Crew" class="rr-signature">
-            </div>
-            <div class="rr-letter-media">
-              <img src="images/rush-revere-liberty-bill.png" loading="lazy" alt="Liberty the horse holding a Bill of Rights t-shirt">
-            </div>
+          <div class="container half left">
+            <h1 class="page-title left-align">Rush Revere</h1>
+            <div class="decoline left-align"></div>
+            <div class="section-2-blurb page-title-blurb left-align">The Adventures of Rush Revere is the #1 <em>New York Times</em> bestselling series by Rush and Kathryn Limbaugh, bringing American history to life through time travel, adventure, humor, and unforgettable characters.</div>
           </div>
+        </div>
+        <div class="mid-section-image layout-2">
+          <div class="page-image" style="background-image:url('images/rr-hero-clark.jpg');background-position:50% 35%;background-size:cover;background-repeat:no-repeat;aspect-ratio:auto;min-height:100lvh"></div>
         </div>
       </div>
     </div>
 
-    <!-- ============ ABOUT THE SERIES ============ -->
+    <!-- ============ SUMMARY OF THE SERIES ============ -->
     <div class="section section3 content">
       <div class="section3-wrap">
-        <div class="rr-wrap">
-          <div class="rr-head-inline"><h2 class="h2">About the Series</h2></div>
-          <div class="rr-about-row">
-            <div class="rr-about-copy">
-              <p class="rr-lead">America is turning 250 &ndash; the perfect time for middle grade students to Rush, Rush, Rush into history!</p>
-              <p>The Rush Revere series is a five-book middle grade series that lets young readers travel back in time and experience American history firsthand. Join American history teacher Rush Revere, his hilarious sidekick Liberty the talking Horse, and the Manchester Middle School students as they meet famous figures, visit important places, and see history happen right in front of them.</p>
-              <p>Written by Rush and Kathryn Adams Limbaugh, this #1 <em>New York Times</em> bestselling and Children&rsquo;s Choice Award-winning series brings America&rsquo;s founding story to life for young readers.</p>
-            </div>
-            <div class="rr-about-media">
-              <img src="images/rush-revere-crew-dc.jpg" loading="lazy" alt="Rush Revere, Liberty and the Manchester Middle School crew in Washington, D.C.">
-            </div>
+        <div class="container">
+          <div class="centered">
+            <h2 class="h2">Summary of the Series</h2>
+            <div class="decoline"></div>
           </div>
-          <div class="rr-callout">
-            <h3>Summary</h3>
-            <p>For America&rsquo;s 250th anniversary, students don&rsquo;t just read about history &ndash; they jump right into it with the Crew.</p>
-            <p>Through time travel, readers join Rush Revere, Liberty the horse, and the Manchester Middle School students as they go directly into America&rsquo;s founding story. They visit Holland, the <em>Mayflower</em>, Plymouth Colony, colonial Boston, Revolutionary War sites, Washington, D.C., Fort McHenry, and the early presidency. Along the way, they meet historical figures including William Bradford, Squanto, Samuel Adams, Paul Revere, George Washington, Abigail Adams, Thomas Jefferson, James Madison, Dolley Madison, and Francis Scott Key.</p>
-            <p>It&rsquo;s American history up close &ndash; exciting, memorable, and fun for middle grade readers.</p>
-          </div>
-          <div class="rr-purchase">
-            <h3>Available to Purchase</h3>
-            <p>All five books and audiobooks are available in-store and online through retailers including <strong>Barnes &amp; Noble, Books-A-Million, Amazon, Walmart,</strong> and other bookstores nationwide.</p>
-            <div class="rr-vendors">
-              <a href="#" class="rr-vendor-box">amazon.com<span class="rr-vendor-note">Logo + link to come</span></a>
-              <a href="#" class="rr-vendor-box">BARNES &amp; NOBLE<span class="rr-vendor-note">Logo + link to come</span></a>
-              <a href="#" class="rr-vendor-box">BAM! Books-A-Million<span class="rr-vendor-note">Logo + link to come</span></a>
-              <a href="#" class="rr-vendor-box">Walmart<span class="rr-vendor-note">Logo + link to come</span></a>
+          <div class="rr-summary">
+            <div class="rr-summary-copy">
+              <div class="section-2-blurb dark">The Adventures of Rush Revere is the #1 <em>New York Times</em> bestselling American history series created by Rush Limbaugh and Kathryn Adams Limbaugh. Blending humor, adventure, and unforgettable characters with the remarkable story of America&rsquo;s founding, the series brings history to life for young readers and families.</div>
+              <div class="spacer"></div>
+              <div class="section-2-blurb dark">Join Rush Revere, his time-traveling talking horse Liberty, and their friends as they race through American history, meeting exceptional Americans and experiencing defining moments firsthand. From the Pilgrims and the American Revolution to the courage, sacrifice, and ideas that shaped the nation, each adventure makes learning history exciting, accessible, and fun.</div>
+              <div class="spacer"></div>
+              <div class="section-2-blurb dark">With millions of books in print and multiple #1 <em>New York Times</em> bestsellers, The Adventures of Rush Revere has introduced a generation of readers to the people and principles behind the American story. Now the adventure continues&mdash;inviting families everywhere to discover history, celebrate America, and have a lot of fun along the way.</div>
             </div>
-            <div class="rr-stars">
-              <img src="images/star-gold.svg" loading="lazy" alt="">
-              <img src="images/star-gold.svg" loading="lazy" alt="">
-              <img src="images/star-gold.svg" loading="lazy" alt="">
-              <img src="images/star-gold.svg" loading="lazy" alt="">
-              <img src="images/star-gold.svg" loading="lazy" alt="">
+            <div class="rr-summary-media">
+              <img src="images/rr-kids-liberty-book.jpg" loading="lazy" alt="A young reader with Liberty the plush horse and Rush Revere and the American Revolution">
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ============ SERIES HIGHLIGHTS ============ -->
-    <div class="section section3 content gray">
-      <div class="section3-wrap">
-        <div class="rr-wrap">
-          <div class="rr-head-inline"><h2 class="h2">Series Highlights</h2></div>
-          <div class="rr-hl-row">
-            <div class="rr-hl-copy">
-              <ul role="list" class="rr-star-list">
-                <li>#1 <em>New York Times</em> Bestselling Series</li>
-                <li>2014 Children&rsquo;s Choice Awards, Author of the Year</li>
-                <li>2017 homeschool.com Back to Homeschool Award</li>
-                <li>Featured in <em>Scholastic</em> Magazine Nationwide</li>
-                <li>Series included in the Accelerated Reader Program</li>
-                <li>5 Star Reviews by Teachers, Parents, and Publications</li>
-              </ul>
-              <div class="rr-order">
-                <h3>Book Series Order</h3>
-                <ol role="list" class="rr-booklist">
-                  <li>Rush Revere and the Brave Pilgrims</li>
-                  <li>Rush Revere and the First Patriots</li>
-                  <li>Rush Revere and the American Revolution</li>
-                  <li>Rush Revere and the Star-Spangled Banner</li>
-                  <li>Rush Revere and the Presidency</li>
-                </ol>
+    <!-- ============ FEATURE PHOTO — the site's column-photo split ============ -->
+    <div class="section no-padding">
+      <div>
+        <div class="row no-gap">
+          <div class="col">
+            <div class="column-photo" style="background-image:url('images/rr-kids-bass-school.jpg');background-position:50% 45%;background-size:cover;background-repeat:no-repeat"></div>
+          </div>
+          <div class="col">
+            <div class="container half">
+              <div class="column-photo-text">
+                <h2 class="h2 left-align">In Classrooms Everywhere</h2>
+                <div class="spacer _1-on-mobile"></div>
+                <div class="section-2-blurb dark">Teachers, parents and young readers across the country have made Rush Revere part of how a generation meets American history.</div>
               </div>
             </div>
-            <div class="rr-hl-media">
-              <img src="images/rush-revere-presidency-cover.jpg" loading="lazy" alt="Rush Revere and the Presidency book cover">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ THE FIVE BOOKS ============ -->
+    <div class="section section3 content">
+      <div class="section3-wrap">
+        <div class="rr-wrap">
+          <div class="rr-head">
+            <h2 class="h2">The Five-Book Series</h2>
+            <hr>
+          </div>
+          <div class="rr-books">
+            <div class="rr-bookrow">
+              <div class="rr-bookrow-media">
+                <img src="images/rr-book-1-brave-pilgrims.jpg" loading="lazy" alt="Rush Revere and the Brave Pilgrims book cover">
+              </div>
+              <div class="rr-bookrow-copy">
+                <span class="rr-booknum">1</span>
+                <h3>Rush Revere and the Brave Pilgrims</h3>
+                <p>Travel aboard the <em>Mayflower</em> and experience Plymouth, the first Thanksgiving, and the courage and perseverance that shaped early America.</p>
+              </div>
+            </div>
+            <div class="rr-bookrow">
+              <div class="rr-bookrow-media">
+                <img src="images/rr-book-2-first-patriots.jpg" loading="lazy" alt="Rush Revere and the First Patriots book cover">
+              </div>
+              <div class="rr-bookrow-copy">
+                <span class="rr-booknum">2</span>
+                <h3>Rush Revere and the First Patriots</h3>
+                <p>Meet Benjamin Franklin and other remarkable patriots as Rush Revere explores the ideas, ingenuity, and determination behind America&rsquo;s fight for freedom.</p>
+              </div>
+            </div>
+            <div class="rr-bookrow">
+              <div class="rr-bookrow-media">
+                <img src="images/rr-book-3-american-revolution.jpg" loading="lazy" alt="Rush Revere and the American Revolution book cover">
+              </div>
+              <div class="rr-bookrow-copy">
+                <span class="rr-booknum">3</span>
+                <h3>Rush Revere and the American Revolution</h3>
+                <p>Experience the American Revolution firsthand as Rush Revere meets George Washington and discovers the courage, sacrifice, and leadership that won independence.</p>
+              </div>
+            </div>
+            <div class="rr-bookrow">
+              <div class="rr-bookrow-media">
+                <img src="images/rr-book-4-star-spangled-banner.jpg" loading="lazy" alt="Rush Revere and the Star-Spangled Banner book cover">
+              </div>
+              <div class="rr-bookrow-copy">
+                <span class="rr-booknum">4</span>
+                <h3>Rush Revere and the Star-Spangled Banner</h3>
+                <p>Journey through American history to discover the Constitution, national symbols, and inspiring stories behind the freedoms Americans continue to cherish today.</p>
+              </div>
+            </div>
+            <div class="rr-bookrow">
+              <div class="rr-bookrow-media">
+                <img src="images/rr-book-5-presidency.jpg" loading="lazy" alt="Rush Revere and the Presidency book cover">
+              </div>
+              <div class="rr-bookrow-copy">
+                <span class="rr-booknum">5</span>
+                <h3>Rush Revere and the Presidency</h3>
+                <p>Meet America&rsquo;s early presidents and explore the challenges, responsibilities, and character required to lead a new nation and protect its ideals.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ============ MOSAIC GALLERY ============ -->
-    <div class="section section3 content">
+    <!-- ============ FULL-WIDTH ILLUSTRATION ============ -->
+    <div class="section photo">
+      <div class="rr-illus-wrap">
+        <img src="images/rr-jefferson-illustration.jpg" loading="lazy" alt="Rush Revere and Liberty meet Thomas Jefferson" class="rr-illus">
+      </div>
+    </div>
+
+    <!-- ============ MEDIA ============ -->
+    <div class="section section3 content gray">
       <div class="section3-wrap">
-        <div class="rr-wrap">
+        <div class="container">
+          <div class="centered">
+            <h2 class="h2">Media</h2>
+            <div class="decoline"></div>
+          </div>
+          <div class="spacer _2"></div>
+          <div class="rr-media">
+
+            <div>
+              <video controls preload="metadata" playsinline poster="images/rr-video-poster.jpg">
+                <source src="media/rush-revere-rides-again.mp4" type="video/mp4">
+                Your browser does not support embedded video.
+              </video>
+              <span class="rr-media-caption">Rush Revere Rides Again</span>
+
+              <div class="rr-audio" id="rr-audio">
+                <audio id="rr-audio-el" preload="metadata">
+                  <source src="media/rush-revere-rides-again.m4a" type="audio/mp4">
+                </audio>
+                <button class="rr-audio-btn" id="rr-audio-btn" type="button" aria-label="Play audio version">
+                  <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+                </button>
+                <div class="rr-audio-body">
+                  <span class="rr-audio-label">Audio</span>
+                  <div class="rr-audio-bar" id="rr-audio-bar"><div class="rr-audio-fill" id="rr-audio-fill"></div></div>
+                  <span class="rr-audio-time"><span id="rr-audio-cur">0:00</span> / <span id="rr-audio-dur">0:00</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <video controls preload="metadata" playsinline poster="images/rr-social-poster.jpg">
+                <source src="media/rush-revere-social.mp4" type="video/mp4">
+                Your browser does not support embedded video.
+              </video>
+              <span class="rr-media-caption">Rush Revere 2026</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CLOSING BAND ============ -->
+    <div class="section photo">
+      <div class="rr-band" style="background-image:url('images/rr-kids-liberty-boy.jpg')"></div>
+    </div>
+
+    <!-- ============ AVAILABLE TO PURCHASE (page foot) ============ -->
+    <div class="section section3 content gray">
+      <div class="section3-wrap">
+        <div class="rr-wrap rr-purchase">
           <div class="rr-head">
-            <h2 class="h2">Readers, Classrooms &amp; Families</h2>
+            <h2 class="h2">Available to Purchase</h2>
             <hr>
           </div>
-          <div class="rr-mosaic">
-            <div class="rr-mcol tall-first">
-              <img src="images/rr-gallery-1.jpg" loading="lazy" alt="A young reader with the Rush Revere series and an American flag blanket">
-              <img src="images/rr-gallery-3.jpg" loading="lazy" alt="A class dressed as historical and modern figures">
-            </div>
-            <div class="rr-mcol short-first">
-              <img src="images/rr-gallery-6.jpg" loading="lazy" alt="Children in colonial costume holding Rush Revere and the Brave Pilgrims">
-              <img src="images/rr-gallery-5.jpg" loading="lazy" alt="Readers with Rush Revere books at the Old State House in Boston">
-            </div>
-            <div class="rr-mcol tall-first">
-              <img src="images/rr-gallery-2.jpg" loading="lazy" alt="Students reading the Rush Revere series in a circle">
-              <img src="images/rr-gallery-4.jpg" loading="lazy" alt="A young reader holding Rush Revere and the Brave Pilgrims">
-            </div>
+          <p>All five books and audiobooks are available in-store and online through retailers including <strong>Barnes &amp; Noble, Books-A-Million, Amazon, Walmart,</strong> and other bookstores nationwide.</p>
+          <div class="rr-vendors">
+            <a href="#" class="rr-vendor-box">amazon.com<span class="rr-vendor-note">Logo + link to come</span></a>
+            <a href="#" class="rr-vendor-box">BARNES &amp; NOBLE<span class="rr-vendor-note">Logo + link to come</span></a>
+            <a href="#" class="rr-vendor-box">BAM! Books-A-Million<span class="rr-vendor-note">Logo + link to come</span></a>
+            <a href="#" class="rr-vendor-box">Walmart<span class="rr-vendor-note">Logo + link to come</span></a>
+          </div>
+          <div class="rr-stars">
+            <img src="images/star-gold.svg" loading="lazy" alt="">
+            <img src="images/star-gold.svg" loading="lazy" alt="">
+            <img src="images/star-gold.svg" loading="lazy" alt="">
+            <img src="images/star-gold.svg" loading="lazy" alt="">
+            <img src="images/star-gold.svg" loading="lazy" alt="">
           </div>
         </div>
       </div>
@@ -608,5 +684,37 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
   <!-- end menu code -->
+  <script>
+  (function () {
+    var wrap = document.getElementById('rr-audio');
+    if (!wrap) return;
+    var a    = document.getElementById('rr-audio-el'),
+        btn  = document.getElementById('rr-audio-btn'),
+        bar  = document.getElementById('rr-audio-bar'),
+        fill = document.getElementById('rr-audio-fill'),
+        cur  = document.getElementById('rr-audio-cur'),
+        dur  = document.getElementById('rr-audio-dur');
+
+    function fmt(t) {
+      if (!isFinite(t)) return '0:00';
+      var m = Math.floor(t / 60), s = Math.floor(t % 60);
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    a.addEventListener('loadedmetadata', function () { dur.textContent = fmt(a.duration); });
+    a.addEventListener('timeupdate', function () {
+      fill.style.width = (a.currentTime / a.duration * 100 || 0) + '%';
+      cur.textContent = fmt(a.currentTime);
+    });
+    a.addEventListener('play',  function () { wrap.classList.add('is-playing'); btn.setAttribute('aria-label','Pause audio version'); });
+    a.addEventListener('pause', function () { wrap.classList.remove('is-playing'); btn.setAttribute('aria-label','Play audio version'); });
+    a.addEventListener('ended', function () { wrap.classList.remove('is-playing'); fill.style.width = '0'; });
+
+    btn.addEventListener('click', function () { a.paused ? a.play() : a.pause(); });
+    bar.addEventListener('click', function (e) {
+      var r = bar.getBoundingClientRect();
+      if (isFinite(a.duration)) a.currentTime = (e.clientX - r.left) / r.width * a.duration;
+    });
+  })();
+  </script>
 </body>
 </html>
